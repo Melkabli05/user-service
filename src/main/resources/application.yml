@@ -1,0 +1,66 @@
+server:
+  port: 8088
+
+#spring.data.mongodb.uri=mongodb+srv://admin:admin@cluster0.yjy4pp4.mongodb.net/lingvopal?retryWrites=true&w=majority
+
+spring:
+  main:
+    web-application-type: reactive
+  application:
+    name: user-service
+  data:
+    mongodb:
+      uri: mongodb+srv://admin:admin@cluster0.yjy4pp4.mongodb.net/lingvopal?retryWrites=true&w=majority
+
+
+# actuator configuration
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health, info, mappings, metrics, loggers, shutdown, pause, resume"
+
+# logging configuration
+
+
+logging:
+  level:
+    root: INFO
+  pattern:
+    dateformat: "yyyy-MM-dd HH:mm:ss.SSS"
+    level: "%5p"
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: user_service.log
+    path: logs
+    file:
+      type: file
+  charset:
+    file: UTF-8
+
+# swagger documentation configuration
+
+springdoc:
+  swagger-ui:
+    #path: /swagger-ui-custom.html
+    try-it-out-enabled: true
+    operations-sorter: method
+    tags-sorter: alpha
+    filter: true
+  packages-to-scan: com.lingvopal.userservice.controller
+
+# eureka configuration
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://localhost:8081/eureka
+
+# Keycloak configuration
+app:
+  config:
+    keycloak:
+      server-url: http://localhost:8080/auth
+      realm: lingvopal
+      clientId: user-service
+      client-secret: g1Kaix7sscDpboMgnWzSR2ciIlMaNuq4
